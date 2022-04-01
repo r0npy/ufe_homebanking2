@@ -13,7 +13,7 @@
     </div>
 
     <div class="card-group" v-for="item in filteredServices">
-      <div class="card">
+      <div class="card" @click="selectService(item)">
         <img
           :src="item.urlLogo"
           class="mg-fluid"
@@ -43,15 +43,18 @@ export default {
   data() {
     return {
       services: [],
+      form: [],
       filteredServices: [],
     };
   },
   async created() {
     try {
-      await axios.get("https://localhost:7258/api/Services/GetAll").then((response) => {
-        this.services = response.data;
-        this.filteredServices = this.services;
-      });
+      await axios
+        .get("https://localhost:7258/api/services/getall")
+        .then((response) => {
+          this.services = response.data;
+          this.filteredServices = this.services;
+        });
 
       console.log(this.services);
     } catch (error) {
@@ -66,6 +69,23 @@ export default {
           item.description.toLowerCase().indexOf(e.target.value.toLowerCase()) >
             -1
       );
+    },
+    async selectService(service) {
+      console.log(`Selected service: ${service.name}`);
+      this.form = await this.getForm(service.id);
+    },
+    async getForm(idService) {
+      try {
+        await axios
+          .get(`https://localhost:7258/api/services/getform/${idService}`)
+          .then((response) => {
+            this.form = response.data;
+          });
+
+        console.log(this.form);
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 };
