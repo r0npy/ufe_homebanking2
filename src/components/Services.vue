@@ -12,23 +12,27 @@
       </div>
     </div>
 
-    <div class="card-group" v-for="item in filteredServices">
-      <div class="card" @click="selectService(item)">
+    <div
+      class="card-group"
+      v-for="service in filteredServices"
+      :key="service.id"
+    >
+      <div class="card" @click="selectService(service)">
         <img
-          :src="item.urlLogo"
+          :src="service.urlLogo"
           class="mg-fluid"
-          :alt="item.description"
+          :alt="service.description"
           width="90"
           height="70"
         />
 
         <div class="card-body">
-          <h5 class="card-title">{{ item.name }}</h5>
+          <h5 class="card-title">{{ service.name }}</h5>
           <p class="card-text">
-            {{ item.description }}
+            {{ service.description }}
           </p>
           <p class="card-text">
-            <small class="text-muted">{{ item.description }}</small>
+            <small class="text-muted">{{ service.description }}</small>
           </p>
         </div>
       </div>
@@ -43,7 +47,6 @@ export default {
   data() {
     return {
       services: [],
-      form: [],
       filteredServices: [],
     };
   },
@@ -70,9 +73,10 @@ export default {
             -1
       );
     },
-    async selectService(service) {
+    selectService(service) {
       console.log(`Selected service: ${service.name}`);
-      this.form = await this.getForm(service.id);
+
+      this.$emit("change-step", 2, service);
     },
     async getForm(idService) {
       try {
@@ -82,7 +86,7 @@ export default {
             this.form = response.data;
           });
 
-        console.log(this.form);
+        console.log("Formulario Recibido", this.form);
       } catch (error) {
         console.error(error);
       }

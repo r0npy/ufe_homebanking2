@@ -1,17 +1,58 @@
 <template>
   <div class="container-fluid py-3">
-    <Services />
+    <Services v-if="step === 1" @change-step="changeStep" />
+
+    <StartPayment
+      v-if="step === 2"
+      @change-step="changeStep"
+      :service="selectedService"
+    />
+
+    <ConfirmPayment
+      v-if="step === 3"
+      @change-step="changeStep"
+      :service="selectedService"
+    />
+
+    <button
+      type="button"
+      class="btn btn-secondary my-2"
+      @click.prevent="restartStep"
+    >
+      Reiniciar
+    </button>
   </div>
 </template>
 
 <script>
 import Services from "./components/Services.vue";
+import StartPayment from "./components/StartPayment.vue";
+import ConfirmPayment from "./components/ConfirmPayment.vue";
 
 export default {
   name: "App",
   components: {
     Services,
-  }
+    StartPayment,
+    ConfirmPayment,
+  },
+  data() {
+    return {
+      step: 1,
+      selectedService: null,
+    };
+  },
+  methods: {
+    changeStep(step, service) {
+      console.log(`Changing to step ${step} with idService ${service.id}`);
+      this.step = step;
+      this.selectedService = service;
+    },
+    restartStep() {
+      this.step = 1;
+      this.selectedService = null;
+    },
+  },
 };
 </script>
 
