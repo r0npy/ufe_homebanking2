@@ -1,0 +1,31 @@
+.btn-primary {
+    background: #f6bb47;
+    background: linear-gradient(to bottom,
+            #f6bb47 0%,
+            #f4861b 50%,
+            #e15e17 51%,
+            #d35915 100%);
+    text-shadow: -1px -1px 0px #b25900;
+    border: 1px solid #a04c00 !important;
+    font-weight: 500;
+    box-shadow: 0px 1px 3px 0px #9b9a99;
+    text-shadow: -1px -1px 0px #b25900;
+}
+
+.btn-secondary {
+    background: #9b9a99;
+    background: linear-gradient(to bottom,
+            rgba(239, 239, 239, 1) 0%,
+            rgba(254, 254, 254, 1) 50%,
+            rgba(241, 241, 241, 1) 57%,
+            rgba(237, 237, 237, 1) 100%) !important;
+    text-shadow: -1px -1px 0px #e2e3e5;
+    border: 1px solid #9b9a99 !important;
+    font-weight: 500;
+    box-shadow: 0px 1px 3px 0px #9b9a99;
+    text-shadow: -1px -1px 0px #e2e3e5;
+}
+
+.card-service {
+    cursor: pointer;
+}

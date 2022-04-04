@@ -2,16 +2,31 @@
   <div>
     <div class="alert alert-secondary" role="alert">
       <div v-for="(field, index) in form" :key="index">
+        <select
+          v-if="field.type === 'select'"
+          class="form-select form-select mb-3"
+        >
+          <option
+            v-for="(value, index) in field.values"
+            :key="index"
+            :value="value"
+          >
+            {{ value }}
+          </option>
+        </select>
+
         <input
+          v-else
           :type="field.type"
           class="form-control"
-          id="floatingInput"
           :placeholder="field.label"
           required
         />
       </div>
     </div>
-    <button type="button" class="btn btn-primary my-2" @click="previewPayment">Continuar</button>
+    <button type="button" class="btn btn-primary my-2" @click="previewPayment">
+      Continuar
+    </button>
   </div>
 </template>
 
@@ -44,11 +59,11 @@ export default {
     }
   },
   methods: {
-      previewPayment() {
-        console.log(this.form);
+    previewPayment() {
+      console.log(this.form);
 
-        this.$emit("change-step", 3, this.service);
-      },
+      this.$emit("change-step", 3, this.service);
+    },
   },
 };
 </script>

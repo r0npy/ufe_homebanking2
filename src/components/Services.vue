@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="alert alert-secondary" role="alert">
-      <div class="form-floating mb-3">
+      <div class="form-floating">
         <input
           class="form-control"
           id="floatingInput"
@@ -12,28 +12,25 @@
       </div>
     </div>
 
-    <div
-      class="card-group"
-      v-for="service in filteredServices"
-      :key="service.id"
-    >
-      <div class="card" @click="selectService(service)">
-        <img
-          :src="service.urlLogo"
-          class="mg-fluid"
-          :alt="service.description"
-          width="90"
-          height="70"
-        />
-
-        <div class="card-body">
-          <h5 class="card-title">{{ service.name }}</h5>
-          <p class="card-text">
-            {{ service.description }}
-          </p>
-          <p class="card-text">
-            <small class="text-muted">{{ service.description }}</small>
-          </p>
+    <div class="card-service row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      <div
+        class="col"
+        @click="selectService(service)"
+        v-for="service in filteredServices"
+        :key="service.id"
+      >
+        <div class="card" :title="service.description">
+          <div class="d-flex align-items-start justify-content-center pt-2">
+            <img
+              :src="service.urlLogo"
+              class="mg-fluid mw-100 d-inline-block"
+              :alt="service.description"
+              height="70px"
+            />
+          </div>
+          <div class="card-body">
+            <p class="card-text text-center text-truncate">{{ service.name }}</p>
+          </div>
         </div>
       </div>
     </div>

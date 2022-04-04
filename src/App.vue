@@ -1,5 +1,7 @@
 <template>
-  <div class="container-fluid py-3">
+  <div>
+    <div>Bienvenido, {{ name }} {{ surname }}</div>
+
     <Services v-if="step === 1" @change-step="changeStep" />
 
     <StartPayment
@@ -16,7 +18,7 @@
 
     <button
       type="button"
-      class="btn btn-secondary my-2"
+      class="btn btn-secondary btn-light my-2"
       @click.prevent="restartStep"
     >
       Reiniciar
@@ -35,6 +37,14 @@ export default {
     Services,
     StartPayment,
     ConfirmPayment,
+  },
+  props: {
+    name: {
+      type: String,
+    },
+    surname: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -58,6 +68,7 @@ export default {
 
 <style lang="scss">
 @import "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css";
+@import url('./assets/css/itau.css');
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -67,4 +78,5 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
 </style>
