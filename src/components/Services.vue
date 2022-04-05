@@ -12,7 +12,13 @@
       </div>
     </div>
 
-    <div class="card-service row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    <div
+      class="
+        card-service
+        row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4
+        g-4
+      "
+    >
       <div
         class="col"
         @click="selectService(service)"
@@ -29,7 +35,9 @@
             />
           </div>
           <div class="card-body">
-            <p class="card-text text-center text-truncate">{{ service.name }}</p>
+            <p class="card-text text-center text-truncate">
+              {{ service.name }}
+            </p>
           </div>
         </div>
       </div>

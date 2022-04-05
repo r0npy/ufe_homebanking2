@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>Bienvenido, {{ name }} {{ surname }}</div>
+    <div>Bienvenido, {{ name }} {{ surname }} su AccessToken es: {{ accessToken }}</div>
 
     <Services v-if="step === 1" @change-step="changeStep" />
 
@@ -8,21 +8,15 @@
       v-if="step === 2"
       @change-step="changeStep"
       :service="selectedService"
+      @restart-step="restartStep"
     />
 
     <ConfirmPayment
       v-if="step === 3"
       @change-step="changeStep"
       :service="selectedService"
+      @restart-step="restartStep"
     />
-
-    <button
-      type="button"
-      class="btn btn-secondary btn-light my-2"
-      @click.prevent="restartStep"
-    >
-      Reiniciar
-    </button>
   </div>
 </template>
 
@@ -43,6 +37,15 @@ export default {
       type: String,
     },
     surname: {
+      type: String,
+    },
+    documento: {
+      type: String,
+    },
+    accessToken: {
+      type: String,
+    },
+    loginAccessToken: {
       type: String,
     },
   },

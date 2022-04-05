@@ -1,20 +1,23 @@
 <template>
   <div>
-    <div class="alert alert-secondary" role="alert">
-      <div v-for="(field, index) in form" :key="index">
-        <select
-          v-if="field.type === 'select'"
-          class="form-select form-select mb-3"
-        >
-          <option
-            v-for="(value, index) in field.values"
-            :key="index"
-            :value="value"
+    <div class="alert alert-secondary my-0 py-2" role="alert">
+      <div v-for="(field, index) in form" :key="index" class="my-2">
+        <div class="form-floating" v-if="field.type === 'select'">
+          <select
+            id="floatingInputGrid"
+            :placeholder="field.label"
+            class="form-select form-select mb-3"
           >
-            {{ value }}
-          </option>
-        </select>
-
+            <option
+              v-for="(value, index) in field.values"
+              :key="index"
+              :value="value"
+            >
+              {{ value }}
+            </option>
+          </select>
+          <label for="floatingSelectGrid">{{ field.label }}</label>
+        </div>
         <input
           v-else
           :type="field.type"
@@ -24,9 +27,24 @@
         />
       </div>
     </div>
-    <button type="button" class="btn btn-primary my-2" @click="previewPayment">
-      Continuar
-    </button>
+
+    <div class="d-flex flex-row bd-highlight justify-content-end">
+      <button
+        type="button"
+        class="btn btn-secondary btn-light m-2"
+        @click.prevent="$emit('restart-step')"
+      >
+        Volver
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-primary my-2"
+        @click="previewPayment"
+      >
+        Continuar
+      </button>
+    </div>
   </div>
 </template>
 

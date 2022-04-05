@@ -90,7 +90,23 @@
         </button>
       </div>
     </div>
-    <button type="button" class="btn btn-primary my-2">Finalizar</button>
+    <div class="d-flex flex-row bd-highlight justify-content-end">
+      <button
+        type="button"
+        class="btn btn-secondary btn-light m-2"
+        @click.prevent="$emit('restart-step')"
+      >
+        Volver
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-primary my-2"
+        @click="previewPayment"
+      >
+        Finalizar
+      </button>
+    </div>
   </div>
 </template>
 
