@@ -1,50 +1,53 @@
 <template>
   <div>
-    <div class="alert alert-secondary my-0 py-2" role="alert">
-      <div v-for="(field, index) in form" :key="index" class="my-2">
-        <div class="form-floating" v-if="field.type === 'select'">
-          <select
-            id="floatingInputGrid"
-            :placeholder="field.label"
-            class="form-select form-select mb-3"
-          >
-            <option
-              v-for="(value, index) in field.values"
-              :key="index"
-              :value="value"
+    <form class="row" @submit.prevent="previewPayment">
+      <div class="alert alert-secondary my-0 py-2" role="alert">
+        <div v-for="(field, index) in form" :key="index" class="my-2">
+          <div class="form-floating" v-if="field.type === 'select'">
+            <select
+              :id="field.id"
+              :placeholder="field.label"
+              class="form-select form-select mb-3"
+              required
             >
-              {{ value }}
-            </option>
-          </select>
-          <label for="floatingSelectGrid">{{ field.label }}</label>
+              <option
+                v-for="(value, index) in field.values"
+                :key="index"
+                :value="value"
+              >
+                {{ value }}
+              </option>
+            </select>
+          </div>
+          <input
+            v-else
+            :id="field.id"
+            :type="field.type"
+            class="form-control"
+            :placeholder="field.label"
+            required
+          />
         </div>
-        <input
-          v-else
-          :type="field.type"
-          class="form-control"
-          :placeholder="field.label"
-          required
-        />
       </div>
-    </div>
 
-    <div class="d-flex flex-row bd-highlight justify-content-end">
-      <button
-        type="button"
-        class="btn btn-secondary btn-light m-2"
-        @click.prevent="$emit('restart-step')"
-      >
-        Volver
-      </button>
+      <div class="d-flex flex-row bd-highlight justify-content-end">
+        <button
+          type="button"
+          class="btn btn-secondary btn-light m-2"
+          @click.prevent="$emit('restart-step')"
+        >
+          Volver
+        </button>
 
-      <button
-        type="button"
-        class="btn btn-primary my-2"
-        @click="previewPayment"
-      >
-        Continuar
-      </button>
-    </div>
+        <button
+          type="submit"
+          class="btn btn-primary my-2"
+        >
+          Continuar
+        </button>
+      </div>
+    </form>
+    
   </div>
 </template>
 

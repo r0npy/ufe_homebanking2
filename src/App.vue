@@ -130,4 +130,8 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+.rwb_link {
+  color: red !important;
+}
 </style>
