@@ -1,36 +1,52 @@
 <template>
   <div>
-    <div>Bienvenido, {{ name }} {{ surname }} su AccessToken es: {{ accessToken }}</div>
+    <Unauthorized v-if="!authorized" />
 
-    <Services v-if="step === 1" @change-step="changeStep" />
+    <div v-if="authorized">
+      <div>
+        Bienvenido, {{ name }} {{ surname }} su AccessToken es:
+        {{ accessToken }}
+      </div>
 
-    <StartPayment
-      v-if="step === 2"
-      @change-step="changeStep"
-      :service="selectedService"
-      @restart-step="restartStep"
-    />
+      <Services
+        ref="childService"
+        v-if="step === 1"
+        @change-step="changeStep"
+      />
 
-    <ConfirmPayment
-      v-if="step === 3"
-      @change-step="changeStep"
-      :service="selectedService"
-      @restart-step="restartStep"
-    />
+      <StartPayment
+        v-if="step === 2"
+        @change-step="changeStep"
+        :service="selectedService"
+        @restart-step="restartStep"
+      />
+
+      <ConfirmPayment
+        v-if="step === 3"
+        @change-step="changeStep"
+        :service="selectedService"
+        @restart-step="restartStep"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import Services from "./components/Services.vue";
-import StartPayment from "./components/StartPayment.vue";
-import ConfirmPayment from "./components/ConfirmPayment.vue";
+import axios from "axios";
+import store from "@/store";
+import Services from "@/components/Services.vue";
+import StartPayment from "@/components/StartPayment.vue";
+import ConfirmPayment from "@/components/ConfirmPayment.vue";
+import Unauthorized from "@/components/ConfirmPayment.vue";
 
 export default {
-  name: "App",
+  name: "PaymentService",
   components: {
+    //Services: () => import(/* webpackChunkName: "services-list" */"@/components/Services.vue"),
     Services,
     StartPayment,
     ConfirmPayment,
+    Unauthorized,
   },
   props: {
     name: {
@@ -65,13 +81,46 @@ export default {
       this.step = 1;
       this.selectedService = null;
     },
+    async login() {
+      try {
+        console.log("vamos a solicitar token");
+        if (this.authorized) {
+          await axios
+            .post("https://localhost:7258/api/users/loginfromhb", {
+              accessToken: this.accessToken,
+            })
+            .then((response) => {
+              console.log(response.data);
+
+              store.dispatch("saveTokens", {
+                refreshToken: response.data.refreshToken,
+                operationToken: response.data.operationToken,
+              });
+
+              this.$refs.childService.getServices();
+            });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
+  computed: {
+    authorized() {
+      return this.accessToken !== null && this.accessToken !== undefined;
+    },
+  },
+  async created() {
+    console.log(this.accessToken);
+    console.log(this.authorized);
+    await this.login();
   },
 };
 </script>
 
 <style lang="scss">
 @import "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css";
-@import url('./assets/css/itau.css');
+@import url("./assets/css/itau.css");
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -81,5 +130,4 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-
 </style>

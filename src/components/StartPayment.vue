@@ -50,8 +50,12 @@
 
 <script>
 import axios from "axios";
+import store from "@/store";
 
 export default {
+  components: {
+    store,
+  },
   props: {
     service: {
       type: Object,
@@ -65,8 +69,20 @@ export default {
   },
   async created() {
     try {
+      let header = {
+        Authorization: "Bearer " + store.state.operationToken,
+      };
+      let configuration = {
+        headers: header,
+      };
+
+      console.log(configuration);
+
       await axios
-        .get(`https://localhost:7258/api/services/getform/${this.service.id}`)
+        .get(
+          `https://localhost:7258/api/services/getform/${this.service.id}`,
+          configuration
+        )
         .then((response) => {
           this.form = response.data;
         });

@@ -112,8 +112,12 @@
 
 <script>
 import axios from "axios";
+import store from "@/store";
 
 export default {
+  components: {
+    store,
+  },
   props: {
     service: {
       type: Object,

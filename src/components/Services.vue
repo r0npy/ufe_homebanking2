@@ -47,8 +47,12 @@
 
 <script>
 import axios from "axios";
+import store from "@/store";
 
 export default {
+  components: {
+    store,
+  },
   data() {
     return {
       services: [],
@@ -56,18 +60,7 @@ export default {
     };
   },
   async created() {
-    try {
-      await axios
-        .get("https://localhost:7258/api/services/getall")
-        .then((response) => {
-          this.services = response.data;
-          this.filteredServices = this.services;
-        });
-
-      console.log(this.services);
-    } catch (error) {
-      console.error(error);
-    }
+    await this.getServices();
   },
   methods: {
     filterServices(e) {
@@ -83,15 +76,27 @@ export default {
 
       this.$emit("change-step", 2, service);
     },
-    async getForm(idService) {
+    async getServices() {
+      if (store.state.operationToken === null) return;
+
       try {
+        let header = {
+          Authorization: "Bearer " + store.state.operationToken,
+        };
+        let configuration = {
+          headers: header,
+        };
+
+        console.log(configuration);
+
         await axios
-          .get(`https://localhost:7258/api/services/getform/${idService}`)
+          .get("https://localhost:7258/api/services/getall", configuration)
           .then((response) => {
-            this.form = response.data;
+            this.services = response.data;
+            this.filteredServices = this.services;
           });
 
-        console.log("Formulario Recibido", this.form);
+        console.log("Lista de Servicios: ", this.services);
       } catch (error) {
         console.error(error);
       }
