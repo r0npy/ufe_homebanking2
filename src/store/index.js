@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import decode from 'jwt-decode'
+import HttpClient from "@/commons/HttpClient"
 
 Vue.use(Vuex)
 
@@ -79,8 +80,8 @@ export default new Vuex.Store({
       };
       let valido = false;
 
-      await axios
-        .post("https://localhost:7258/api/users/refrescartokens", null, configuration)
+      await HttpClient
+        .post("users/refrescartokens", null, configuration)
         .then(response => {
           commit("setRefreshToken", response.data.refreshToken);
           commit("setOperationToken", response.data.operationToken);

@@ -39,20 +39,14 @@
           Volver
         </button>
 
-        <button
-          type="submit"
-          class="btn btn-primary my-2"
-        >
-          Continuar
-        </button>
+        <button type="submit" class="btn btn-primary my-2">Continuar</button>
       </div>
     </form>
-    
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import HttpClient from "@/commons/HttpClient";
 import store from "@/store";
 
 export default {
@@ -81,14 +75,12 @@ export default {
 
       console.log(configuration);
 
-      await axios
-        .get(
-          `https://localhost:7258/api/services/getform/${this.service.id}`,
-          configuration
-        )
-        .then((response) => {
-          this.form = response.data;
-        });
+      await HttpClient.get(
+        `services/getform/${this.service.id}`,
+        configuration
+      ).then((response) => {
+        this.form = response.data;
+      });
 
       console.log(this.form);
     } catch (error) {

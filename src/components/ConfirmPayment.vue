@@ -108,7 +108,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import HttpClient from "@/commons/HttpClient";
 import store from "@/store";
 
 export default {

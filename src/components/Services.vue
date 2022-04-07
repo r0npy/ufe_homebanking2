@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import axios from "axios";
 import store from "@/store";
+import HttpClient from "@/commons/HttpClient";
 
 export default {
   components: {
@@ -89,12 +89,12 @@ export default {
 
         console.log(configuration);
 
-        await axios
-          .get("https://localhost:7258/api/services/getall", configuration)
-          .then((response) => {
+        await HttpClient.get("services/getall", configuration).then(
+          (response) => {
             this.services = response.data;
             this.filteredServices = this.services;
-          });
+          }
+        );
 
         console.log("Lista de Servicios: ", this.services);
       } catch (error) {

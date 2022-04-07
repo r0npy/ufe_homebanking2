@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import HttpClient from "@/commons/HttpClient";
 import store from "@/store";
 import Services from "@/components/Services.vue";
 import StartPayment from "@/components/StartPayment.vue";
@@ -83,22 +83,19 @@ export default {
     },
     async login() {
       try {
-        console.log("vamos a solicitar token");
         if (this.authorized) {
-          await axios
-            .post("https://localhost:7258/api/users/loginfromhb", {
-              accessToken: this.accessToken,
-            })
-            .then((response) => {
-              console.log(response.data);
+          await HttpClient.post("users/loginfromhb", {
+            accessToken: this.accessToken,
+          }).then((response) => {
+            console.log(response.data);
 
-              store.dispatch("saveTokens", {
-                refreshToken: response.data.refreshToken,
-                operationToken: response.data.operationToken,
-              });
-
-              this.$refs.childService.getServices();
+            store.dispatch("saveTokens", {
+              refreshToken: response.data.refreshToken,
+              operationToken: response.data.operationToken,
             });
+
+            this.$refs.childService.getServices();
+          });
         }
       } catch (error) {
         console.error(error);
