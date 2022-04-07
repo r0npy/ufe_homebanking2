@@ -8,7 +8,8 @@
               :id="field.id"
               :placeholder="field.label"
               class="form-select form-select mb-3"
-              required
+              :required="field.required"
+              v-model="field.value"
             >
               <option
                 v-for="(value, index) in field.values"
@@ -25,7 +26,8 @@
             :type="field.type"
             class="form-control"
             :placeholder="field.label"
-            required
+            :required="field.required"
+            v-model="field.value"
           />
         </div>
       </div>
@@ -91,7 +93,7 @@ export default {
     previewPayment() {
       console.log(this.form);
 
-      this.$emit("change-step", 3, this.service);
+      this.$emit("change-step", 3, this.service, this.form);
     },
   },
 };

@@ -25,6 +25,7 @@
         v-if="step === 3"
         @change-step="changeStep"
         :service="selectedService"
+        :form="form"
         @restart-step="restartStep"
       />
     </div>
@@ -69,13 +70,15 @@ export default {
     return {
       step: 1,
       selectedService: null,
+      form: [],
     };
   },
   methods: {
-    changeStep(step, service) {
+    changeStep(step, service, form) {
       console.log(`Changing to step ${step} with idService ${service.id}`);
       this.step = step;
       this.selectedService = service;
+      this.form = form;
     },
     restartStep() {
       this.step = 1;

@@ -1,5 +1,20 @@
 <template>
   <div>
+    <div class="alert alert-secondary row" role="alert">
+      <h5 class="row align-items-start"><div col="12">Resumen de Pago</div></h5>
+      <div class="row align-items-start" v-for="field in form" :key="field.id">
+        <div class="col-3 fw-bold">{{ field.label }}</div>
+        <div class="col-9">{{ field.value }}</div>
+      </div>
+    </div>
+
+    <div class="alert alert-warning row" role="alert">
+      <div col="12">
+        <strong>Importante:</strong> Todas las operaciones realizadas después de
+        las 13:00 hs. serán confirmadas el siguiente día hábil
+      </div>
+    </div>
+
     <form class="row" @submit.prevent="finishPayment">
       <div class="alert alert-secondary" role="alert">
         <div class="form-floating mb-3">
@@ -118,6 +133,10 @@ export default {
   props: {
     service: {
       type: Object,
+      required: true,
+    },
+    form: {
+      type: Array,
       required: true,
     },
   },
