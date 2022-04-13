@@ -38,7 +38,7 @@ import store from "@/store";
 import Services from "@/components/Services.vue";
 import StartPayment from "@/components/StartPayment.vue";
 import ConfirmPayment from "@/components/ConfirmPayment.vue";
-import Unauthorized from "@/components/ConfirmPayment.vue";
+import Unauthorized from "@/components/Unauthorized.vue";
 
 export default {
   name: "PaymentService",
