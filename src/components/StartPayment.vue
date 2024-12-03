@@ -2,17 +2,17 @@
   <div>
     <form class="row" @submit.prevent="previewPayment">
       <div class="alert alert-secondary my-0 py-2" role="alert">
-        <div v-for="(field, index) in form" :key="index" class="my-2">
-          <div class="form-floating" v-if="field.type === 'select'">
+        <div v-for="(field, index) in form.data[0].campos" :key="index" class="my-2">
+          <div class="form-floating" v-if="field.tipoCampo === 7">
             <select
-              :id="field.id"
-              :placeholder="field.label"
+              :id="field.nombre"
+              :placeholder="field.descripcion"
               class="form-select form-select mb-3"
-              :required="field.required"
-              v-model="field.value"
+              :required="field.requerido"
+              v-model="field.valor"
             >
               <option
-                v-for="(value, index) in field.values"
+                v-for="(value, index) in field.valor"
                 :key="index"
                 :value="value"
               >
@@ -22,12 +22,12 @@
           </div>
           <input
             v-else
-            :id="field.id"
-            :type="field.type"
+            :id="field.nombre"
+            :type="field.tipoDato === 0 ? 'text' : 'number'"
             class="form-control"
-            :placeholder="field.label"
-            :required="field.required"
-            v-model="field.value"
+            :placeholder="field.descripcion"
+            :required="field.requerido"
+            v-model="field.valor"
           />
         </div>
       </div>
@@ -78,10 +78,11 @@ export default {
       console.log(configuration);
 
       await HttpClient.get(
-        `services/getform/${this.service.id}`,
+        `services/getform/${this.service.code}`,
         configuration
       ).then((response) => {
         this.form = response.data;
+        console.log("form", this.form);
       });
 
       console.log(this.form);

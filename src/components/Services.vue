@@ -28,7 +28,7 @@
         <div class="card" :title="service.description">
           <div class="d-flex align-items-start justify-content-center pt-2">
             <img
-              :src="service.urlLogo"
+              :src="service.urlImage"
               class="mg-fluid mw-100 d-inline-block"
               :alt="service.description"
               height="70px"
